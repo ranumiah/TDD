@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WyCash", "WyCash\WyCash.csproj", "{A863CAA1-3310-4534-9D0B-A015D596AE11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WyCash.Tests", "WyCash.Tests\WyCash.Tests.csproj", "{949125D4-EBEC-4B1E-9F03-852F25C99D52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A863CAA1-3310-4534-9D0B-A015D596AE11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A863CAA1-3310-4534-9D0B-A015D596AE11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A863CAA1-3310-4534-9D0B-A015D596AE11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{949125D4-EBEC-4B1E-9F03-852F25C99D52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{949125D4-EBEC-4B1E-9F03-852F25C99D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{949125D4-EBEC-4B1E-9F03-852F25C99D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{949125D4-EBEC-4B1E-9F03-852F25C99D52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
