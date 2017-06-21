@@ -8,70 +8,104 @@ namespace WyCash.Tests
        [Test]
         public void TestMultiplication()
         {
-            var five = new Dollar(5);
+            //To be communicative,
+            //var five = Money.Dollar(5);
+            var five = Money.Dollar(5);
 
             //This test speaks to us more clearly, as if it were an assertion of truth, not a sequence of operations.
-            Assert.That(five.Times(2), Is.EqualTo(new Dollar(10)));
-            Assert.That(five.Times(3), Is.EqualTo(new Dollar(15)));
+            Assert.That(five.Times(2), Is.EqualTo(Money.Dollar(10)));
+            Assert.That(five.Times(3), Is.EqualTo(Money.Dollar(15)));
         }
 
         [Test]
         public void TestFrancMultiplication()
         {
-            var five = new Franc(5);
-            Assert.That(five.Times(2), Is.EqualTo(new Franc(10)));
-            Assert.That(five.Times(3), Is.EqualTo(new Franc(15)));
+            var five = Money.Franc(5);
+            Assert.That(five.Times(2), Is.EqualTo(Money.Franc(10)));
+            Assert.That(five.Times(3), Is.EqualTo(Money.Franc(15)));
         }
 
         [Test]
         public void TestEquality()
         {
-            var firstFiveDollar = new Dollar(5);
-            var secondFiveDollar = new Dollar(5);
-            var sixDollar = new Dollar(6);
+            Assert.That(Money.Dollar(5), Is.EqualTo(Money.Dollar(5)));
+            Assert.That(Money.Franc(5), Is.EqualTo(Money.Franc(5)));
 
-            Assert.That(firstFiveDollar, Is.EqualTo(secondFiveDollar));
-            Assert.That(firstFiveDollar, Is.Not.EqualTo(sixDollar));
+            Assert.That(Money.Dollar(5), Is.Not.EqualTo(Money.Dollar(6)));
+            Assert.That(Money.Franc(5), Is.Not.EqualTo(Money.Franc(6)));
+            Assert.That(Money.Franc(5), Is.Not.EqualTo(Money.Dollar(5)));
+        }
+
+        [Test]
+        public void TestCurrency()
+        {
+            Assert.That("USD", Is.EqualTo(Money.Dollar(1).Currency()));
+            Assert.That("CHF", Is.EqualTo(Money.Franc(1).Currency()));
         }
     }
 
-    public class Dollar
+    public abstract class Money
     {
-        private readonly int _amount;
+        protected int Amount { get; set; }
+        protected string _currency;
 
-        public Dollar(int amount)
+        protected Money(int amount, string currency)
         {
-            _amount = amount;
-        }
-
-        public Dollar Times(int multiplier)
-        {
-            return new Dollar(_amount * multiplier);
+            Amount = amount;
+            _currency = currency;
         }
 
         public override bool Equals(object obj)
         {
-            return ((Dollar) obj)._amount == _amount;
+            return GetType() == obj.GetType()
+                && ((Money)obj).Amount == Amount;
+        }
+
+        public abstract Money Times(int multiplier);
+        public abstract string Currency();
+
+        public static Money Dollar(int amount)
+        {
+            return new Dollar(amount, "USD");
+        }
+
+        public static Money Franc(int amount)
+        {
+            return new Franc(amount, "CHF");
         }
     }
 
-    public class Franc
+    public class Dollar : Money
     {
-        private readonly int _amount;
-
-        public Franc(int amount)
+        public Dollar(int amount, string currency) : base(amount, currency)
         {
-            _amount = amount;
         }
 
-        public Franc Times(int multiplier)
+        public override Money Times(int multiplier)
         {
-            return new Franc(_amount * multiplier);
+            return Dollar(Amount * multiplier);
         }
 
-        public override bool Equals(object obj)
+        public override string Currency()
         {
-            return ((Franc) obj)._amount == _amount;
+            return _currency;
+        }
+    }
+
+    public class Franc : Money
+    {
+        public Franc(int amount, string currency) : base(amount, currency)
+        {
+        }
+
+        public override Money Times(int multiplier)
+        {
+            return Franc(Amount * multiplier);
+        }
+
+        public override string Currency()
+        {
+            return _currency;
         }
     }
 }
